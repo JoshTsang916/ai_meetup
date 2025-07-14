@@ -224,6 +224,25 @@
                     <label for="nickname">姓名或暱稱或英文名(想要大家怎麼稱呼你)<span class="required">*</span></label>
                     <input type="text" id="nickname" name="nickname" required>
                 </div>
+
+                <div class="form-group">
+                    <label>角色<span class="required">*</span></label>
+                <div>
+                    <input type="radio" id="speaker" name="role" value="主要分享者" required>
+                    <label for="speaker">主要分享者</label>
+                </div>
+                    
+                <div>
+                    <input type="radio" id="listener" name="role" value="旁聽者" required>
+                    <label for="listener">旁聽者</label>
+                </div>
+                </div>
+
+                <div class="form-group">
+                    <label for="email">電子郵件<span class="required">*</span></label>
+                    <input type="email" id="email" name="email" required>
+                </div>
+
                 
                 <div class="form-group">
                     <label>有在使用哪些AI工具<span class="required">*</span></label>
@@ -312,6 +331,9 @@
             const nickname = document.getElementById('nickname').value.trim();
             const reason = document.getElementById('reason').value.trim();
             const selectedTools = document.querySelectorAll('input[name="aiTools"]:checked');
+            const role = document.querySelector('input[name="role"]:checked').value;
+            const email = document.getElementById('email').value.trim();
+
             
             if (!name || !nickname || !reason || selectedTools.length === 0) {
                 errorMessage.innerHTML = '<p>✗ 請填寫所有必填欄位！</p>';
@@ -327,6 +349,8 @@
             // 收集表單資料
             const formData = {
                 name: name,
+                role: role,
+                email: email,
                 nickname: nickname,
                 aiTools: Array.from(selectedTools).map(checkbox => checkbox.value),
                 suggestions: document.getElementById('suggestions').value.trim(),

@@ -1,410 +1,132 @@
 <!DOCTYPE html>
-<html lang="zh-TW">
+<html lang="zh-Hant">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>歡迎參加AI小聚</title>
+    <title>AI 小聚結束問卷</title>
+    <!-- Tailwind CSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
     <style>
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
-
+        /* Custom font for better readability */
         body {
-            font-family: 'Arial', sans-serif;
-            background: linear-gradient(135deg, #1a1a1a 0%, #2d3748 100%);
-            color: #e2e8f0;
-            min-height: 100vh;
-            overflow-x: hidden;
-        }
-
-        .background-animation {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            z-index: -1;
-            background: 
-                linear-gradient(135deg, #1a1a1a 0%, #2d3748 100%),
-                linear-gradient(90deg, transparent 0%, rgba(99, 102, 241, 0.03) 50%, transparent 100%);
-        }
-
-        .container {
-            max-width: 800px;
-            margin: 0 auto;
-            padding: 20px;
-            position: relative;
-            z-index: 1;
-        }
-
-        .title {
-            text-align: center;
-            font-size: 3rem;
-            margin-bottom: 20px;
-            color: #6366f1;
-            font-weight: 700;
-        }
-
-        .form-container {
-            background: rgba(45, 55, 72, 0.8);
-            border: 1px solid #4a5568;
-            border-radius: 15px;
-            padding: 40px;
-            backdrop-filter: blur(10px);
-            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
-            position: relative;
-        }
-
-        .form-group {
-            margin-bottom: 25px;
-        }
-
-        label {
-            display: block;
-            margin-bottom: 8px;
-            font-weight: bold;
-            color: #e2e8f0;
-            font-size: 1.1rem;
-        }
-
-        .required {
-            color: #ef4444;
-            margin-left: 5px;
-        }
-
-        input[type="text"], 
-        input[type="email"] {
-            width: 100%;
-            padding: 12px 15px;
-            background: rgba(26, 32, 44, 0.8);
-            border: 1px solid #4a5568;
-            border-radius: 8px;
-            color: #e2e8f0;
-            font-size: 1rem;
-            transition: all 0.3s ease;
-        }
-
-        input[type="text"]:focus, 
-        input[type="email"]:focus {
-            outline: none;
-            border-color: #6366f1;
-            box-shadow: 0 0 0 3px rgba(99, 102, 241, 0.2);
-            background: rgba(26, 32, 44, 0.9);
-        }
-
-        .checkbox-group {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-            gap: 15px;
-            margin-top: 10px;
-        }
-
-        .checkbox-item {
-            display: flex;
-            align-items: center;
-            padding: 10px;
-            background: rgba(26, 32, 44, 0.6);
-            border-radius: 8px;
-            border: 1px solid #4a5568;
-            transition: all 0.3s ease;
-        }
-
-        .checkbox-item:hover {
-            border-color: #6366f1;
-            background: rgba(99, 102, 241, 0.1);
-        }
-
-        .checkbox-item input[type="checkbox"] {
-            margin-right: 10px;
-            width: 18px;
-            height: 18px;
-            accent-color: #6366f1;
-        }
-
-        .checkbox-item label {
-            margin: 0;
-            font-size: 0.9rem;
-            cursor: pointer;
-            color: #cbd5e0;
-        }
-
-        .checkbox-item input[type="checkbox"]:checked + label {
-            color: #6366f1;
-            font-weight: 600;
-        }
-
-        .submit-btn {
-            background: linear-gradient(45deg, #00ffff, #ff00ff);
-            color: #000;
-            padding: 15px 40px;
-            border: none;
-            border-radius: 8px;
-            font-size: 1.2rem;
-            font-weight: bold;
-            cursor: pointer;
-            transition: all 0.3s ease;
-            text-transform: uppercase;
-            letter-spacing: 1px;
-            box-shadow: 0 0 20px rgba(0, 255, 255, 0.3);
-            width: 100%;
-        }
-
-        .submit-btn:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 5px 25px rgba(0, 255, 255, 0.5);
-        }
-
-        .submit-btn:active {
-            transform: translateY(0);
-        }
-
-        .loading {
-            display: none;
-            text-align: center;
-            color: #00ffff;
-            font-size: 1.1rem;
-            margin-top: 20px;
-        }
-
-        .success-message {
-            display: none;
-            background: rgba(0, 255, 127, 0.2);
-            border: 2px solid #00ff7f;
-            border-radius: 8px;
-            padding: 15px;
-            margin-top: 20px;
-            text-align: center;
-            color: #00ff7f;
-            font-weight: bold;
-        }
-
-        .error-message {
-            display: none;
-            background: rgba(255, 0, 127, 0.2);
-            border: 2px solid #ff007f;
-            border-radius: 8px;
-            padding: 15px;
-            margin-top: 20px;
-            text-align: center;
-            color: #ff007f;
-            font-weight: bold;
-        }
-
-        @media (max-width: 768px) {
-            .title {
-                font-size: 2rem;
-            }
-            
-            .form-container {
-                padding: 20px;
-            }
-            
-            .checkbox-group {
-                grid-template-columns: 1fr;
-            }
+            font-family: 'Inter', sans-serif;
         }
     </style>
 </head>
-<body>
-    <div class="background-animation"></div>
-    
-    <div class="container">
-        <h1 class="title">歡迎參加AI小聚</h1>
-        
-        <div class="form-container">
-            <form id="aiMeetupForm">
-                <div class="form-group">
-                    <label for="name">facebook名稱<span class="required">*</span></label>
-                    <input type="text" id="name" name="name" required>
-                </div>
-                
-                <div class="form-group">
-                    <label for="nickname">姓名或暱稱或英文名(想要大家怎麼稱呼你)<span class="required">*</span></label>
-                    <input type="text" id="nickname" name="nickname" required>
-                </div>
+<body class="bg-gradient-to-br from-gray-900 to-black min-h-screen flex items-center justify-center p-4">
+    <div class="bg-gray-800 p-8 rounded-xl shadow-2xl w-full max-w-2xl border border-gray-700">
+        <h1 class="text-3xl font-bold text-gray-100 mb-6 text-center">AI 小聚結束問卷</h1>
+        <p class="text-gray-300 mb-8 text-center">感謝您參與本次 AI 小聚！請花幾分鐘填寫此問卷，您的寶貴意見將幫助我們未來舉辦更好的活動。</p>
 
-<div class="form-group">
-    <label>角色<span class="required">*</span></label>
-    <div style="display: flex; gap: 20px; align-items: center;">
-        <div>
-            <input type="radio" id="speaker" name="role" value="主要分享者" required>
-            <label for="speaker">主要分享者</label>
-        </div>
-        <div>
-            <input type="radio" id="listener" name="role" value="旁聽者" required>
-            <label for="listener">旁聽者</label>
-        </div>
-    </div>
-</div>
+        <form id="aiMeetupSurveyForm" class="space-y-6">
+            <!-- 1. 姓名或暱稱 -->
+            <div>
+                <label for="name" class="block text-gray-200 text-sm font-bold mb-2">
+                    1. 姓名或暱稱
+                </label>
+                <input type="text" id="name" name="name"
+                       class="shadow appearance-none bg-gray-700 border border-gray-600 rounded-md w-full py-2 px-3 text-white leading-tight focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500 placeholder-gray-400"
+                       placeholder="Ex. Josh" required>
+            </div>
 
-                <div class="form-group">
-                    <label for="email">電子郵件<span class="required">*</span></label>
-                    <input type="email" id="email" name="email" required>
-                </div>
+            <!-- 2. Email -->
+            <div>
+                <label for="email" class="block text-gray-200 text-sm font-bold mb-2">
+                    2. Email
+                </label>
+                <input type="email" id="email" name="email"
+                       class="shadow appearance-none bg-gray-700 border border-gray-600 rounded-md w-full py-2 px-3 text-white leading-tight focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500 placeholder-gray-400"
+                       placeholder="Ex. Josh@gmail.com" required>
+            </div>
 
-                
-                <div class="form-group">
-                    <label>有在使用哪些AI工具<span class="required">*</span></label>
-                    <div class="checkbox-group">
-                        <div class="checkbox-item">
-                            <input type="checkbox" id="chatgpt" name="aiTools" value="ChatGPT">
-                            <label for="chatgpt">ChatGPT</label>
-                        </div>
-                        <div class="checkbox-item">
-                            <input type="checkbox" id="claude" name="aiTools" value="Claude">
-                            <label for="claude">Claude</label>
-                        </div>
-                        <div class="checkbox-item">
-                            <input type="checkbox" id="gork" name="aiTools" value="Gork">
-                            <label for="gork">Gork</label>
-                        </div>
-                        <div class="checkbox-item">
-                            <input type="checkbox" id="gemini" name="aiTools" value="Gemini">
-                            <label for="gemini">Gemini</label>
-        </div>
-                        <div class="checkbox-item">
-                            <input type="checkbox" id="notebooklm" name="aiTools" value="NotebookLM">
-                            <label for="notebooklm">NotebookLM</label>
-                        </div>
-                        <div class="checkbox-item">
-                            <input type="checkbox" id="felo" name="aiTools" value="felo">
-                            <label for="felo">felo</label>
-                        </div>
-                        <div class="checkbox-item">
-                            <input type="checkbox" id="zapier" name="aiTools" value="zapier/make/n8n">
-                            <label for="zapier">zapier/make/n8n</label>
-                        </div>
-                        <div class="checkbox-item">
-                            <input type="checkbox" id="Perplexity" name="aiTools" value="Perplexity">
-                            <label for="others">Perplexity</label>
-                        </div>
-                        <div class="checkbox-item">
-                            <input type="checkbox" id="notUsing" name="aiTools" value="都沒在使用">
-                            <label for="notUsing">沒有使用AI工具</label>
-                        </div>
-                    </div>
-                </div>
-                
-                <div class="form-group">
-                    <label for="suggestions">沒有在上表但有在使用的AI工具</label>
-                    <input type="text" id="suggestions" name="suggestions" placeholder="請輸入您使用的其他AI工具...">
-                </div>
-                
-                <div class="form-group">
-                    <label for="reason">為什麼想要來參加AI小聚<span class="required">*</span></label>
-                    <input type="text" id="reason" name="reason" required placeholder="請分享您參加的動機...">
-                </div>
-                
-                <button type="submit" class="submit-btn">送出資訊</button>
-                
-                <div class="loading" id="loading">
-                    <p>正在提交資料...</p>
-                </div>
-                
-                <div class="success-message" id="successMessage">
-                    <p>✓ 歡迎你參與AI小聚，你將會收到一封確認信。</p>
-                </div>
-                
-                <div class="error-message" id="errorMessage">
-                    <p>✗ 提交失敗，請檢查網路連線或稍後再試。</p>
-                </div>
-            </form>
-        </div>
+            <!-- 3. 對這次的AI小聚有什麼建議 -->
+            <div>
+                <label for="suggestions" class="block text-gray-200 text-sm font-bold mb-2">
+                    3. 對這次的 AI 小聚有什麼建議？
+                </label>
+                <textarea id="suggestions" name="suggestions" rows="4"
+                          class="shadow appearance-none bg-gray-700 border border-gray-600 rounded-md w-full py-2 px-3 text-white leading-tight focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500 placeholder-gray-400"
+                          placeholder="Ex. 希望可以更多討論時間"></textarea>
+            </div>
+
+            <!-- 4. 未來對於AI會想要深入瞭解什麼 -->
+            <div>
+                <label for="futureInterests" class="block text-gray-200 text-sm font-bold mb-2">
+                    4. 未來對於 AI 會想要深入瞭解什麼？
+                </label>
+                <textarea id="futureInterests" name="futureInterests" rows="4"
+                          class="shadow appearance-none bg-gray-700 border border-gray-600 rounded-md w-full py-2 px-3 text-white leading-tight focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500 placeholder-gray-400"
+                          placeholder="Ex. n8n 自動化工作流"></textarea>
+            </div>
+
+            <!-- 5. 還有沒有什麼想要說的呢 -->
+            <div>
+                <label for="additionalComments" class="block text-gray-200 text-sm font-bold mb-2">
+                    5. 還有沒有什麼想要說的呢？
+                </label>
+                <textarea id="additionalComments" name="additionalComments" rows="4"
+                          class="shadow appearance-none bg-gray-700 border border-gray-600 rounded-md w-full py-2 px-3 text-white leading-tight focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500 placeholder-gray-400"
+                          placeholder="Ex. 感謝主辦單位，收穫良多！"></textarea>
+            </div>
+
+            <button type="submit"
+                    class="w-full bg-blue-700 hover:bg-blue-800 text-white font-bold py-3 px-4 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-600 focus:ring-offset-2 focus:ring-offset-gray-800 transition duration-300 ease-in-out">
+                提交問卷
+            </button>
+
+            <!-- Submission Status Message -->
+            <div id="message" class="mt-4 text-center text-sm font-medium"></div>
+        </form>
     </div>
 
     <script>
-        document.getElementById('aiMeetupForm').addEventListener('submit', async function(e) {
-            e.preventDefault();
-            
-            const loading = document.getElementById('loading');
-            const successMessage = document.getElementById('successMessage');
-            const errorMessage = document.getElementById('errorMessage');
-            const submitBtn = document.querySelector('.submit-btn');
-            
-            // 隱藏之前的訊息
-            successMessage.style.display = 'none';
-            errorMessage.style.display = 'none';
-            
-            // 驗證必填欄位
-            const name = document.getElementById('name').value.trim();
-            const nickname = document.getElementById('nickname').value.trim();
-            const reason = document.getElementById('reason').value.trim();
-            const selectedTools = document.querySelectorAll('input[name="aiTools"]:checked');
-            const role = document.querySelector('input[name="role"]:checked').value;
-            const email = document.getElementById('email').value.trim();
+        // 在這裡填入您的 n8n Webhook 連結
+        const webhookUrl = 'https://rajatsang.app.n8n.cloud/webhook-test/b4f117db-8347-4e94-bf8b-4b277273adda'; // <-- 請將此處替換為您的 n8n Webhook URL
 
-            
-            if (!name || !nickname || !reason || selectedTools.length === 0) {
-                errorMessage.innerHTML = '<p>✗ 請填寫所有必填欄位！</p>';
-                errorMessage.style.display = 'block';
+        document.getElementById('aiMeetupSurveyForm').addEventListener('submit', async function(event) {
+            event.preventDefault(); // 阻止表單預設提交行為
+
+            const messageDiv = document.getElementById('message');
+            messageDiv.textContent = '正在提交中...';
+            messageDiv.className = 'mt-4 text-center text-sm font-medium text-gray-400'; // 提交中文字顏色
+
+            if (webhookUrl === 'YOUR_N8N_WEBHOOK_URL_HERE' || !webhookUrl) {
+                messageDiv.textContent = '請在程式碼中填寫 n8n Webhook 連結！';
+                messageDiv.className = 'mt-4 text-center text-sm font-medium text-red-400'; // 錯誤文字顏色
                 return;
             }
-            
-            // 顯示載入狀態
-            loading.style.display = 'block';
-            submitBtn.disabled = true;
-            submitBtn.textContent = '提交中...';
-            
-            // 收集表單資料
+
             const formData = {
-                name: name,
-                role: role,
-                email: email,
-                nickname: nickname,
-                aiTools: Array.from(selectedTools).map(checkbox => checkbox.value),
-                suggestions: document.getElementById('suggestions').value.trim(),
-                reason: reason,
-                timestamp: new Date().toISOString()
+                name: document.getElementById('name').value,
+                email: document.getElementById('email').value,
+                suggestions: document.getElementById('suggestions').value,
+                futureInterests: document.getElementById('futureInterests').value,
+                additionalComments: document.getElementById('additionalComments').value
             };
-            
+
             try {
-                // 這裡請替換成您的n8n webhook URL
-                const webhookURL = 'https://joshtsang916.app.n8n.cloud/webhook/b4f117db-8347-4e94-bf8b-4b277273adda';
-                
-                const response = await fetch(webhookURL, {
+                const response = await fetch(webhookUrl, {
                     method: 'POST',
                     headers: {
-                        'Content-Type': 'application/json',
+                        'Content-Type': 'application/json'
                     },
                     body: JSON.stringify(formData)
                 });
-                
+
                 if (response.ok) {
-                    successMessage.style.display = 'block';
-                    document.getElementById('aiMeetupForm').reset();
+                    messageDiv.textContent = '問卷提交成功！感謝您的回饋。';
+                    messageDiv.className = 'mt-4 text-center text-sm font-medium text-green-400'; // 成功文字顏色
+                    // 提交成功後清除表單內容 (可選)
+                    this.reset();
                 } else {
-                    throw new Error('Network response was not ok');
+                    const errorText = await response.text();
+                    messageDiv.textContent = `提交失敗：${response.status} ${response.statusText}. ${errorText}`;
+                    messageDiv.className = 'mt-4 text-center text-sm font-medium text-red-400'; // 錯誤文字顏色
                 }
             } catch (error) {
-                console.error('Error:', error);
-                errorMessage.innerHTML = '<p>✗ 提交失敗，請檢查網路連線或稍後再試。</p>';
-                errorMessage.style.display = 'block';
-            } finally {
-                loading.style.display = 'none';
-                submitBtn.disabled = false;
-                submitBtn.textContent = '送出資訊';
+                messageDiv.textContent = `提交時發生錯誤：${error.message}`;
+                messageDiv.className = 'mt-4 text-center text-sm font-medium text-red-400'; // 錯誤文字顏色
             }
-        });
-        
-        // 互斥選項處理
-        document.getElementById('notUsing').addEventListener('change', function() {
-            if (this.checked) {
-                const otherCheckboxes = document.querySelectorAll('input[name="aiTools"]:not(#notUsing)');
-                otherCheckboxes.forEach(cb => {
-                    cb.checked = false;
-                });
-            }
-        });
-        
-        // 其他選項被選中時，取消"都沒在使用"
-        document.querySelectorAll('input[name="aiTools"]:not(#notUsing)').forEach(cb => {
-            cb.addEventListener('change', function() {
-                if (this.checked) {
-                    document.getElementById('notUsing').checked = false;
-                }
-            });
         });
     </script>
 </body>

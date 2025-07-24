@@ -3,129 +3,460 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>AI 小聚結束問卷</title>
-    <!-- Tailwind CSS CDN -->
+    <title>AI 自動化應用問卷 - Josh 的學習筆記</title>
+    <!-- 載入 Tailwind CSS -->
     <script src="https://cdn.tailwindcss.com"></script>
     <style>
-        /* Custom font for better readability */
+        /* 設定 Inter 字體，提供科技感 */
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap');
         body {
             font-family: 'Inter', sans-serif;
+            /* 深色背景，帶有漸變和科技感紋理 */
+            background: linear-gradient(135deg, #1A202C 0%, #2D3748 100%);
+            color: #E2E8F0; /* 淺灰色文字 */
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 2rem 1rem; /* 增加內邊距以適應移動裝置 */
+            overflow-x: hidden; /* 防止水平滾動 */
+        }
+
+        /* 主容器樣式 */
+        .form-container {
+            background-color: #2D3748; /* 深灰藍色背景 */
+            border-radius: 1.5rem; /* 大圓角 */
+            padding: 2.5rem;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5); /* 強烈陰影 */
+            max-width: 800px;
+            width: 100%;
+            border: 1px solid #4A5568; /* 細邊框 */
+            position: relative;
+            overflow: hidden;
+        }
+
+        /* 科技感裝飾線條 */
+        .form-container::before {
+            content: '';
+            position: absolute;
+            top: -50px;
+            left: -50px;
+            width: 200px;
+            height: 200px;
+            background: radial-gradient(circle, rgba(79, 70, 229, 0.3) 0%, transparent 70%);
+            border-radius: 50%;
+            filter: blur(80px);
+            z-index: 0;
+        }
+        .form-container::after {
+            content: '';
+            position: absolute;
+            bottom: -50px;
+            right: -50px;
+            width: 150px;
+            height: 150px;
+            background: radial-gradient(circle, rgba(139, 92, 246, 0.3) 0%, transparent 70%);
+            border-radius: 50%;
+            filter: blur(60px);
+            z-index: 0;
+        }
+
+        /* 表單元素通用樣式 */
+        input[type="text"],
+        input[type="email"],
+        textarea {
+            width: 100%;
+            padding: 0.75rem 1rem;
+            margin-top: 0.5rem;
+            background-color: #4A5568; /* 輸入框背景色 */
+            border: 1px solid #636B7F; /* 輸入框邊框 */
+            border-radius: 0.75rem; /* 圓角 */
+            color: #E2E8F0;
+            transition: all 0.2s ease-in-out;
+            outline: none;
+        }
+        input[type="text"]:focus,
+        input[type="email"]:focus,
+        textarea:focus {
+            border-color: #667EEA; /* 聚焦時邊框顏色 */
+            box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.3); /* 聚焦時陰影 */
+        }
+        textarea {
+            min-height: 100px;
+            resize: vertical;
+        }
+
+        /* 單選/多選按鈕樣式 */
+        .radio-option, .checkbox-option {
+            display: flex;
+            align-items: center;
+            margin-bottom: 0.75rem;
+            cursor: pointer;
+            padding: 0.5rem 0.75rem;
+            background-color: #364052;
+            border-radius: 0.75rem;
+            transition: all 0.2s ease-in-out;
+        }
+        .radio-option:hover, .checkbox-option:hover {
+            background-color: #4A5568;
+        }
+        .radio-option input[type="radio"],
+        .checkbox-option input[type="checkbox"] {
+            margin-right: 0.75rem;
+            appearance: none; /* 隱藏原生樣式 */
+            width: 1.25rem;
+            height: 1.25rem;
+            border: 2px solid #667EEA; /* 自定義邊框 */
+            border-radius: 50%; /* 圓形 */
+            background-color: #364052;
+            position: relative;
+            flex-shrink: 0; /* 防止縮小 */
+        }
+        .checkbox-option input[type="checkbox"] {
+            border-radius: 0.25rem; /* 方形 */
+        }
+
+        /* 選中時的樣式 */
+        .radio-option input[type="radio"]:checked::before {
+            content: '';
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            width: 0.75rem;
+            height: 0.75rem;
+            border-radius: 50%;
+            background-color: #667EEA; /* 填充色 */
+        }
+        .checkbox-option input[type="checkbox"]:checked::before {
+            content: '✔'; /* 打勾符號 */
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            font-size: 0.9rem;
+            color: #E2E8F0;
+        }
+
+        /* 提交按鈕樣式 */
+        .submit-button {
+            background: linear-gradient(90deg, #667EEA 0%, #8B5CF6 100%); /* 漸變背景 */
+            color: white;
+            padding: 1rem 2rem;
+            border-radius: 1rem;
+            font-weight: 600;
+            font-size: 1.125rem;
+            cursor: pointer;
+            border: none;
+            transition: all 0.3s ease-in-out;
+            box-shadow: 0 5px 15px rgba(102, 126, 234, 0.4);
+            width: 100%;
+            margin-top: 1.5rem;
+        }
+        .submit-button:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 8px 20px rgba(102, 126, 234, 0.6);
+        }
+        .submit-button:active {
+            transform: translateY(0);
+            box-shadow: 0 3px 10px rgba(102, 126, 234, 0.3);
+        }
+
+        /* 訊息彈窗樣式 */
+        .message-box {
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            background-color: #2D3748;
+            border: 1px solid #4A5568;
+            border-radius: 1rem;
+            padding: 2rem;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.6);
+            z-index: 1000;
+            display: none; /* 預設隱藏 */
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            max-width: 400px;
+            width: 90%;
+            color: #E2E8F0;
+        }
+        .message-box.show {
+            display: flex;
+        }
+        .message-box h3 {
+            font-size: 1.5rem;
+            font-weight: 700;
+            margin-bottom: 1rem;
+            color: #667EEA;
+        }
+        .message-box p {
+            margin-bottom: 1.5rem;
+            font-size: 1rem;
+        }
+        .message-box button {
+            background-color: #667EEA;
+            color: white;
+            padding: 0.75rem 1.5rem;
+            border-radius: 0.75rem;
+            border: none;
+            cursor: pointer;
+            transition: background-color 0.2s ease-in-out;
+        }
+        .message-box button:hover {
+            background-color: #5A67D8;
+        }
+
+        /* 響應式設計 */
+        @media (max-width: 768px) {
+            .form-container {
+                padding: 1.5rem;
+                margin: 1rem; /* 確保在小螢幕上有足夠邊距 */
+            }
+            .submit-button {
+                font-size: 1rem;
+                padding: 0.8rem 1.5rem;
+            }
+            .message-box {
+                padding: 1.5rem;
+            }
+            .message-box h3 {
+                font-size: 1.25rem;
+            }
+            .message-box p {
+                font-size: 0.9rem;
+            }
         }
     </style>
 </head>
-<body class="bg-gradient-to-br from-gray-900 to-black min-h-screen flex items-center justify-center p-4">
-    <div class="bg-gray-800 p-8 rounded-xl shadow-2xl w-full max-w-2xl border border-gray-700">
-        <h1 class="text-3xl font-bold text-gray-100 mb-6 text-center">AI 小聚結束問卷</h1>
-        <p class="text-gray-300 mb-8 text-center">感謝您參與本次 AI 小聚！請花幾分鐘填寫此問卷，您的寶貴意見將幫助我們未來舉辦更好的活動。</p>
+<body>
+    <div class="form-container relative z-10">
+        <h1 class="text-4xl font-bold text-center mb-8 text-transparent bg-clip-text bg-gradient-to-r from-blue-400 to-purple-500">
+            AI 自動化應用問卷
+        </h1>
+        <p class="text-center text-lg mb-8 text-gray-400">
+            感謝您撥冗填寫，您的回饋將幫助我們更好地了解自動化需求！
+        </p>
 
-        <form id="aiMeetupSurveyForm" class="space-y-6">
+        <form id="automationForm" class="space-y-6">
             <!-- 1. 姓名或暱稱 -->
             <div>
-                <label for="name" class="block text-gray-200 text-sm font-bold mb-2">
-                    1. 姓名或暱稱
-                </label>
-                <input type="text" id="name" name="name"
-                       class="shadow appearance-none bg-gray-700 border border-gray-600 rounded-md w-full py-2 px-3 text-white leading-tight focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500 placeholder-gray-400"
-                       placeholder="Ex. Josh" required>
+                <label for="name" class="block text-lg font-medium mb-2">1. 姓名或暱稱</label>
+                <input type="text" id="name" name="name" placeholder="請輸入您的姓名或暱稱" class="rounded-xl focus:ring-blue-500 focus:border-blue-500">
             </div>
 
             <!-- 2. Email -->
             <div>
-                <label for="email" class="block text-gray-200 text-sm font-bold mb-2">
-                    2. Email
-                </label>
-                <input type="email" id="email" name="email"
-                       class="shadow appearance-none bg-gray-700 border border-gray-600 rounded-md w-full py-2 px-3 text-white leading-tight focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500 placeholder-gray-400"
-                       placeholder="Ex. Josh@gmail.com" required>
+                <label for="email" class="block text-lg font-medium mb-2">2. Email</label>
+                <input type="email" id="email" name="email" placeholder="請輸入您的Email" class="rounded-xl focus:ring-blue-500 focus:border-blue-500">
             </div>
 
-            <!-- 3. 對這次的AI小聚有什麼建議 -->
+            <!-- 3. 有聽過n8n嗎？ -->
             <div>
-                <label for="suggestions" class="block text-gray-200 text-sm font-bold mb-2">
-                    3. 對這次的 AI 小聚有什麼建議？
-                </label>
-                <textarea id="suggestions" name="suggestions" rows="4"
-                          class="shadow appearance-none bg-gray-700 border border-gray-600 rounded-md w-full py-2 px-3 text-white leading-tight focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500 placeholder-gray-400"
-                          placeholder="Ex. 希望可以更多討論時間"></textarea>
+                <label class="block text-lg font-medium mb-3">3. 有聽過 n8n 嗎？</label>
+                <div class="space-y-3">
+                    <label class="radio-option rounded-xl">
+                        <input type="radio" name="n8nKnowledge" value="完全沒聽過n8n" required>
+                        <span>完全沒聽過 n8n</span>
+                    </label>
+                    <label class="radio-option rounded-xl">
+                        <input type="radio" name="n8nKnowledge" value="有聽過n8n但不熟">
+                        <span>有聽過 n8n 但不熟</span>
+                    </label>
+                    <label class="radio-option rounded-xl">
+                        <input type="radio" name="n8nKnowledge" value="我很會使用n8n">
+                        <span>我很會使用 n8n</span>
+                    </label>
+                </div>
             </div>
 
-            <!-- 4. 未來對於AI會想要深入瞭解什麼 -->
+            <!-- 4. 會想要學習基礎的n8n串接邏輯嗎？ -->
             <div>
-                <label for="futureInterests" class="block text-gray-200 text-sm font-bold mb-2">
-                    4. 未來對於 AI 會想要深入瞭解什麼？
-                </label>
-                <textarea id="futureInterests" name="futureInterests" rows="4"
-                          class="shadow appearance-none bg-gray-700 border border-gray-600 rounded-md w-full py-2 px-3 text-white leading-tight focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500 placeholder-gray-400"
-                          placeholder="Ex. n8n 自動化工作流"></textarea>
+                <label class="block text-lg font-medium mb-3">4. 會想要學習基礎的 n8n 串接邏輯嗎？</label>
+                <div class="space-y-3">
+                    <label class="radio-option rounded-xl">
+                        <input type="radio" name="learnN8n" value="超級想" required>
+                        <span>超級想</span>
+                    </label>
+                    <label class="radio-option rounded-xl">
+                        <input type="radio" name="learnN8n" value="感覺很難還是算了">
+                        <span>感覺很難還是算了</span>
+                    </label>
+                    <label class="radio-option rounded-xl">
+                        <input type="radio" name="learnN8n" value="沒太大興趣">
+                        <span>沒太大興趣</span>
+                    </label>
+                </div>
             </div>
 
-            <!-- 5. 還有沒有什麼想要說的呢 -->
+            <!-- 5. 生活或工作中有什麼場景是想要可以讓AI自動化的？ -->
             <div>
-                <label for="additionalComments" class="block text-gray-200 text-sm font-bold mb-2">
-                    5. 還有沒有什麼想要說的呢？
-                </label>
-                <textarea id="additionalComments" name="additionalComments" rows="4"
-                          class="shadow appearance-none bg-gray-700 border border-gray-600 rounded-md w-full py-2 px-3 text-white leading-tight focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500 placeholder-gray-400"
-                          placeholder="Ex. 感謝主辦單位，收穫良多！"></textarea>
+                <label class="block text-lg font-medium mb-3">5. 生活或工作中有什麼場景是想要可以讓 AI 自動化的？ (可複選)</label>
+                <div class="space-y-3">
+                    <label class="checkbox-option rounded-xl">
+                        <input type="checkbox" name="automationScenarios" value="每天整理並總結某領域的新聞發送到line">
+                        <span>每天整理並總結某領域的新聞發送到 Line</span>
+                    </label>
+                    <label class="checkbox-option rounded-xl">
+                        <input type="checkbox" name="automationScenarios" value="一個自己事業的AI客服">
+                        <span>一個自己事業的 AI 客服</span>
+                    </label>
+                    <label class="checkbox-option rounded-xl">
+                        <input type="checkbox" name="automationScenarios" value="可以管理自己行程的AI助理">
+                        <span>可以管理自己行程的 AI 助理</span>
+                    </label>
+                    <label class="checkbox-option rounded-xl">
+                        <input type="checkbox" name="automationScenarios" value="製作網頁讓顧客填寫資料並把資料送入表單整理">
+                        <span>製作網頁讓顧客填寫資料並把資料送入表單整理</span>
+                    </label>
+                    <label class="checkbox-option rounded-xl">
+                        <input type="checkbox" name="automationScenarios" value="AI記帳助理">
+                        <span>AI 記帳助理</span>
+                    </label>
+                    <label class="checkbox-option rounded-xl">
+                        <input type="checkbox" name="automationScenarios" value="其他" id="otherScenarioCheckbox">
+                        <span>其他</span>
+                    </label>
+                    <textarea id="otherScenarioText" name="otherScenarioText" placeholder="請描述您的其他想法" class="hidden rounded-xl focus:ring-blue-500 focus:border-blue-500 mt-2"></textarea>
+                </div>
             </div>
 
-            <button type="submit"
-                    class="w-full bg-blue-700 hover:bg-blue-800 text-white font-bold py-3 px-4 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-600 focus:ring-offset-2 focus:ring-offset-gray-800 transition duration-300 ease-in-out">
+            <!-- 6. 其他想要利用AI自動化做的事情（歡迎天馬行空） -->
+            <div>
+                <label for="otherThoughts" class="block text-lg font-medium mb-2">6. 其他想要利用 AI 自動化做的事情（歡迎天馬行空）</label>
+                <textarea id="otherThoughts" name="otherThoughts" placeholder="請分享您對自動化的其他想法" class="rounded-xl focus:ring-blue-500 focus:border-blue-500"></textarea>
+            </div>
+
+            <button type="submit" class="submit-button rounded-2xl">
                 提交問卷
             </button>
-
-            <!-- Submission Status Message -->
-            <div id="message" class="mt-4 text-center text-sm font-medium"></div>
         </form>
     </div>
 
-    <script>
-        // 在這裡填入您的 n8n Webhook 連結
-        const webhookUrl = 'https://rajatsang.app.n8n.cloud/webhook/b4f117db-8347-4e94-bf8b-4b277273adda'; // <-- 請將此處替換為您的 n8n Webhook URL
+    <!-- 訊息彈窗 -->
+    <div id="messageBox" class="message-box">
+        <h3 id="messageTitle"></h3>
+        <p id="messageContent"></p>
+        <button id="messageCloseButton">確認</button>
+    </div>
 
-        document.getElementById('aiMeetupSurveyForm').addEventListener('submit', async function(event) {
+    <script>
+        // === 請在這裡貼上您的 n8n Webhook URL ===
+        // 例如: const N8N_WEBHOOK_URL = "https://your-n8n-instance.com/webhook/your-unique-path";
+        // 如果您還沒有 n8n Webhook，可以暫時留空或使用一個測試連結。
+        // 提交時如果此處為空，將會顯示錯誤訊息。
+        const N8N_WEBHOOK_URL = "https://rajatsang.app.n8n.cloud/webhook-test/b4f117db-8347-4e94-bf8b-4b277273adda"; // <-- 將您的 n8n Webhook URL 貼到這裡
+
+        // 獲取表單元素
+        const form = document.getElementById('automationForm');
+        const otherScenarioCheckbox = document.getElementById('otherScenarioCheckbox');
+        const otherScenarioText = document.getElementById('otherScenarioText');
+        const messageBox = document.getElementById('messageBox');
+        const messageTitle = document.getElementById('messageTitle');
+        const messageContent = document.getElementById('messageContent');
+        const messageCloseButton = document.getElementById('messageCloseButton');
+
+        // 顯示訊息彈窗的函數
+        function showMessageBox(title, content) {
+            messageTitle.textContent = title;
+            messageContent.textContent = content;
+            messageBox.classList.add('show');
+        }
+
+        // 隱藏訊息彈窗的函數
+        function hideMessageBox() {
+            messageBox.classList.remove('show');
+        }
+
+        // 監聽訊息彈窗的關閉按鈕
+        messageCloseButton.addEventListener('click', hideMessageBox);
+
+        // 監聽「其他」場景多選框的變化，以顯示/隱藏文字輸入框
+        otherScenarioCheckbox.addEventListener('change', function() {
+            if (this.checked) {
+                otherScenarioText.classList.remove('hidden');
+                otherScenarioText.setAttribute('required', 'true'); // 如果選中「其他」，則要求填寫
+            } else {
+                otherScenarioText.classList.add('hidden');
+                otherScenarioText.removeAttribute('required');
+                otherScenarioText.value = ''; // 清空內容
+            }
+        });
+
+        // 監聽表單提交事件
+        form.addEventListener('submit', async function(event) {
             event.preventDefault(); // 阻止表單預設提交行為
 
-            const messageDiv = document.getElementById('message');
-            messageDiv.textContent = '正在提交中...';
-            messageDiv.className = 'mt-4 text-center text-sm font-medium text-gray-400'; // 提交中文字顏色
-
-            if (webhookUrl === 'YOUR_N8N_WEBHOOK_URL_HERE' || !webhookUrl) {
-                messageDiv.textContent = '請在程式碼中填寫 n8n Webhook 連結！';
-                messageDiv.className = 'mt-4 text-center text-sm font-medium text-red-400'; // 錯誤文字顏色
+            // 檢查 n8n Webhook URL 是否已設定
+            if (!N8N_WEBHOOK_URL) {
+                showMessageBox('設定錯誤', '請在程式碼中設定 n8n Webhook URL，才能提交資料。');
                 return;
             }
 
-            const formData = {
-                name: document.getElementById('name').value,
-                email: document.getElementById('email').value,
-                suggestions: document.getElementById('suggestions').value,
-                futureInterests: document.getElementById('futureInterests').value,
-                additionalComments: document.getElementById('additionalComments').value
-            };
+            // 收集表單資料
+            const formData = new FormData(form);
+            const data = {};
+
+            // 處理單選按鈕
+            data.name = formData.get('name');
+            data.email = formData.get('email');
+            data.n8nKnowledge = formData.get('n8nKnowledge');
+            data.learnN8n = formData.get('learnN8n');
+
+            // 處理多選按鈕
+            const automationScenarios = [];
+            formData.getAll('automationScenarios').forEach(value => {
+                if (value === '其他') {
+                    // 如果「其他」被選中，並且有填寫內容，則使用填寫的內容
+                    if (otherScenarioText.value.trim() !== '') {
+                        automationScenarios.push(`其他: ${otherScenarioText.value.trim()}`);
+                    } else {
+                        // 如果選了「其他」但沒填內容，可以提示用戶或忽略
+                        // 這裡選擇忽略，因為 required 屬性會處理空值
+                    }
+                } else {
+                    automationScenarios.push(value);
+                }
+            });
+            data.automationScenarios = automationScenarios;
+
+            // 處理其他想法
+            data.otherThoughts = formData.get('otherThoughts');
+
+            console.log('收集到的資料:', data); // 除錯用，可移除
+
+            // 將資料轉換為 JSON 格式
+            const jsonData = JSON.stringify(data);
 
             try {
-                const response = await fetch(webhookUrl, {
+                // 發送 POST 請求到 n8n Webhook
+                const response = await fetch(N8N_WEBHOOK_URL, {
                     method: 'POST',
                     headers: {
                         'Content-Type': 'application/json'
                     },
-                    body: JSON.stringify(formData)
+                    body: jsonData
                 });
 
+                // 檢查回應狀態
                 if (response.ok) {
-                    messageDiv.textContent = '問卷提交成功！感謝您的回饋。';
-                    messageDiv.className = 'mt-4 text-center text-sm font-medium text-green-400'; // 成功文字顏色
-                    // 提交成功後清除表單內容 (可選)
-                    this.reset();
+                    // 成功提交
+                    showMessageBox('提交成功！', '您的問卷已成功送出，感謝您的參與！');
+                    form.reset(); // 清空表單
+                    otherScenarioText.classList.add('hidden'); // 隱藏「其他」文字框
+                    otherScenarioText.removeAttribute('required');
                 } else {
+                    // 提交失敗
                     const errorText = await response.text();
-                    messageDiv.textContent = `提交失敗：${response.status} ${response.statusText}. ${errorText}`;
-                    messageDiv.className = 'mt-4 text-center text-sm font-medium text-red-400'; // 錯誤文字顏色
+                    console.error('Webhook 提交失敗:', response.status, errorText);
+                    showMessageBox('提交失敗', `資料送出時發生錯誤 (狀態碼: ${response.status})。請稍後再試。`);
                 }
             } catch (error) {
-                messageDiv.textContent = `提交時發生錯誤：${error.message}`;
-                messageDiv.className = 'mt-4 text-center text-sm font-medium text-red-400'; // 錯誤文字顏色
+                // 網路錯誤或其他異常
+                console.error('發送請求時發生錯誤:', error);
+                showMessageBox('錯誤', '無法連接到伺服器。請檢查您的網路連線或稍後再試。');
             }
         });
     </script>
